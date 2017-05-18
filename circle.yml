@@ -36,8 +36,7 @@ jobs:
           name: knapsack pro queue
           command: |
             RAILS_ENV=test
-            bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
-#            not using xvfb-run -a
+            xvfb-run -a bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
       - store_test_results:
           path: /tmp/tests
       - store_artifacts:
