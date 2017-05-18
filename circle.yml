@@ -16,7 +16,7 @@ jobs:
             - sample1-{{ .Branch }}-bundle
       - run:
           name: Bundle Install Ruby Dependencies
-          command: bundle install --deployment
+          command: bundle -v && bundle install --deployment
       - run: bundle show rails
       - save_cache:
           key: sample1-{{ .Branch }}-bundle-{{ checksum "Gemfile.lock" }}
