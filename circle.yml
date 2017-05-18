@@ -33,10 +33,11 @@ jobs:
           name: Create DB and load schema
           command: cp config/database.circle.yml config/database.yml && bundle exec rake db:create db:schema:load --trace
       - run:
-          name: Rspec via timings
+          name: knapsack pro queue
           command: |
-            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-            xvfb-run -a bundle exec rspec --format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml -- ${TESTFILES}
+            RAILS_ENV=test
+            bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+#            not using xvfb-run -a
       - store_test_results:
           path: /tmp/tests
       - store_artifacts:
