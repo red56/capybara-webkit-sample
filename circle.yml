@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: red56/capybara-webkit-deps
+        environment:
+          BUNDLE_GITHUB__HTTPS: true
       - image: postgres:9.4.1
         environment:
           POSTGRES_USER: root
