@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: red56/capybara-webkit-deps
+      - image: postgres:9.4.1
+        environment:
+          POSTGRES_USER: root
+    working_directory: /root/sample
+    steps:
+      - checkout
+      - run: ruby -v
+      - restore_cache:
+          keys:
+            - sample1-{{ .Branch }}-bundle-{{ checksum "Gemfile.lock" }}
+            - sample1-{{ .Branch }}-bundle
+      - run:
+          name: Bundle Install Ruby Dependencies
+          command: bundle install --deployment
+      - run: bundle show rails
+      - save_cache:
+          key: sample1-{{ .Branch }}-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /root/sample/vendor/bundle
+      - save_cache:
+          key: sample1-{{ .Branch }}-bundle
+          paths:
+            - /root/sample/vendor/bundle
+
+      - run:
+          name: Create DB and load schema
+          command: cp config/database.circle.yml config/database.yml && bundle exec rake db:create db:schema:load --trace
+      - run:
+          name: Rspec via timings
+          command: |
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            xvfb-run -a bundle exec rspec --format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml -- ${TESTFILES}
+      - store_test_results:
+          path: /tmp/tests
+      - store_artifacts:
+          path: /tmp/rspec
+          destination: rspec
+      - store_artifacts:
+          path: /root/sample/tmp/capybara
+          destination: screenshots

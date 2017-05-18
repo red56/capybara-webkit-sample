@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  database: sample_development
+  password:
+  host: localhost
+  encoding: utf8
+
+test:
+  adapter: postgresql
+  database: sample_test
+  password:
+  host: localhost
+  encoding: utf8
