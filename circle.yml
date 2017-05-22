@@ -32,21 +32,33 @@ jobs:
       - run:
           name: Create DB and load schema
           command: cp config/database.circle.yml config/database.yml && bundle exec rake db:create db:schema:load --trace
+
+
       - run:
-          name: knapsack pro regular mode without xvfb
+          name: knapsack pro regular mode with xvfb
           command: |
             RAILS_ENV=test
-            bundle exec rake "knapsack_pro:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
-      - run:
-          name: knapsack pro queue without xvfb
-          command: |
-            RAILS_ENV=test
-            bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+            xvfb-run -a bundle exec rake "knapsack_pro:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+      #- run:
+          #name: knapsack pro regular mode without xvfb
+          #command: |
+            #RAILS_ENV=test
+            #bundle exec rake "knapsack_pro:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+
+
       - run:
           name: knapsack pro queue with xvfb
           command: |
             RAILS_ENV=test
             xvfb-run -a bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+      - run:
+          name: knapsack pro queue without xvfb
+          command: |
+            RAILS_ENV=test
+            bundle exec rake "knapsack_pro:queue:rspec[--format d --format RspecJunitFormatter --out /tmp/tests/rspec/junit.xml]"
+
+
+
       - store_test_results:
           path: /tmp/tests
       - store_artifacts:
