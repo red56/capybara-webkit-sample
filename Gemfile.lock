@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/mattheworiordan/capybara-screenshot.git
+  remote: git://github.com/mattheworiordan/capybara-screenshot.git
   revision: 5183d3d11b02b77048fd628cdcae09e8e851d2ec
   branch: master
   specs:
@@ -8,7 +8,7 @@ GIT
       launchy
 
 GIT
-  remote: https://github.com/timdiggins/rspec_junit_formatter.git
+  remote: git://github.com/timdiggins/rspec_junit_formatter.git
   revision: 6e74b6677cfdc9574fe6ecd37d7d1d085111f0a7
   branch: report-line-number-of-inclusion
   specs:
@@ -94,7 +94,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
-    knapsack_pro (0.40.0)
+    knapsack_pro (0.41.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -233,4 +233,4 @@ RUBY VERSION
    ruby 2.3.4p301
 
 BUNDLED WITH
-   1.14.6
+   1.15.0
