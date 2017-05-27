@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Things" do
+RSpec.describe "Things", type: :feature do
   describe "without js" do
     it "can create something" do
       visit things_path
