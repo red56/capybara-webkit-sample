@@ -94,7 +94,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
-    knapsack_pro (0.41.0)
+    knapsack_pro (0.42.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
